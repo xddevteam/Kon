@@ -3,16 +3,20 @@ name: Update Proxy IP Status
 on:
   workflow_dispatch:
 
+# Add permissions to allow writing to the repository
+permissions:
+  contents: write
+
 jobs:
   update-proxies:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4  # Updated to latest version
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5  # Updated to latest version
       with:
         python-version: '3.x'
 
@@ -28,14 +32,19 @@ jobs:
       run: |
         python update_proxy_status.py
 
+    - name: Create error.txt if it doesn't exist
+      run: |
+        if [ ! -f error.txt ]; then
+          touch error.txt
+          echo "No errors" > error.txt
+        fi
+
     - name: Commit and push changes
       run: |
         git config --local user.name "github-actions[bot]"
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git add f74bjd2h2ko99f3j5
-        if [ -f error.txt ]; then
-          git add error.txt
-        fi
+        git add error.txt
         if git diff --cached --exit-code; then
           echo "No changes to commit"
         else
