@@ -1,0 +1,1 @@
+Error checking 104.168.102.163:443: 500 Server Error: Internal Server Error for url: https://p01--boiling-frame--kw6dd7bjv2nr.code.run/check?ip=104.168.102.163&host=speed.cloudflare.com&port=443&tls=true
